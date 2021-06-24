@@ -27,3 +27,17 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/chat', function () {
+    return Inertia::render('Chat/container');
+})->name('chat');
+
+
+Route::group(["middleware"=>"auth:sanctum"],function () {
+
+    
+    Route::get('/chat/rooms','ChatController@rooms');
+    Route::post('/chat/room/{Id}/messages','ChatController@message');
+    Route::get('/chat/room/{Id}/message','ChatController@newMessage');
+    
+});
